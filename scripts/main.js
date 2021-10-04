@@ -69,7 +69,6 @@ $('document').ready(function(){
             var bracketLink = data["tournament"]["brackets"];
             getter = new SmashGGGetter(bracketLink);
             getter.getParticipantSets(player);
-            
             waitForCompareAndExecute();
         });
     } catch (error) {
