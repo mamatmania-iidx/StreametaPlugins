@@ -41,7 +41,7 @@ function initWebsocket()
 	socket.onopen = function()
 	{
 		console.log("Welcome - status "+this.readyState);
-		socket.send(ausmashToken);
+		socket.send(streametaToken);
 	};
 
 	socket.onmessage = function(msg)
@@ -69,7 +69,7 @@ function initWebsocket()
 
 async function getStreametaApi(callback, subset=false)
 {
-	var api = `http://ns.streameta.com/api/?token=${ausmashToken}`;
+	var api = `http://ns.streameta.com/api/?token=${streametaToken}`;
 	if (subset){
 		api = api + `&subset=${subset}`;
 	}

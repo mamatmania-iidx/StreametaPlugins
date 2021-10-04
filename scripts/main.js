@@ -43,6 +43,7 @@ function waitForCompareAndExecute(){
     {
       setTimeout(waitForCompareAndExecute, 400);
     } else {
+        //change here
         var newHTML = "";
         var max = Math.min(getter.recentData.length, 6)
         for (let i = 0; i < max; i++) {
@@ -56,7 +57,7 @@ function waitForCompareAndExecute(){
 $('document').ready(function(){
     try {
         console.log(smashGGKey);
-        console.log(ausmashToken);
+        console.log(streametaToken);
         $('body').html("Fetching..");
         initWebsocket();
         getStreametaApi(function(data){

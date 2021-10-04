@@ -1,3 +1,4 @@
+//Modify this function if you want to change the set format
 const formatSetData = (string, player) => {
     let re = new RegExp("(.*) ([0-9]+) - (.*) ([0-9]+)");
     var temp;
