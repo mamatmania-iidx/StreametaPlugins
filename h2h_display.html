@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html data-token="0ea76df066ce329ecc88461b766f591f" data-overlay="0ea76df066ce329ecc88461b766f591f" data-immediate="0">
+	<head>
+
+		<meta charset="utf-8">
+		<title>VS History Display</title>
+        <style id="variables"></style>
+		<style id="temp_variables"></style>
+		<!-- Google Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<!-- CSS Reset -->
+		<link rel="stylesheet" href="h2h_display.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="config.js"></script>
+		<script src="scripts/ausmash_h2h_display/tinycolor.js"></script>
+		<script src="scripts/network.js"></script>
+		<script src="scripts/ausmash_h2h_display/helper.js"></script>
+        <script src="scripts/ausmash-classes.js"></script>
+        <script src="scripts/ausmash_h2h_display/main.js"></script>
+	</head>
+	<body>
+		<div id="fetching">Fetching...</div>
+		<table class="hidden"id="resultsTable">
+			<thead>
+				<tr>
+				<th class="p1"></th>
+				<th>Results</th>
+				<th class="p2"></th>
+				</tr>
+			</thead>
+			<tbody id="resultsBody">
+			</tbody>
+		</table>
+		<table class="hidden" id="h2hTable">
+			<thead>
+				<tr>
+				<th class="p1"></th>
+				<th>Head to Head</th>
+				<th class="p2"></th>
+				</tr>
+			</thead>
+			<tbody id="h2hBody">
+				<tr>
+					<td id="p1AllTime"></td>
+					<td>All time</td>
+					<td id="p2AllTime"></td>
+				</tr>
+				<tr>
+					<td id="p1Recent"></td>
+					<td>Last three months</td>
+					<td id="p2Recent"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
+

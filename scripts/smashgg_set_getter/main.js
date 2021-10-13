@@ -37,7 +37,6 @@ function checkMessage(data)
                     var max = Math.min(data.length, 6)
                     for (let i = 0; i < max; i++) {
                         newHTML = newHTML + formatSetData(data[i]['displayScore'], player) + "<br>"
-                        
                     }
                     $('body').html(newHTML);
                 });
@@ -60,7 +59,7 @@ $('document').ready(function(){
             }
             var bracketLink = data["tournament"]["brackets"];
             getter = new SmashGGGetter(bracketLink);
-            getter.init().then(() => 
+            getter.init_participants().then(() => 
             {
                 console.log(player);
                 getter.getParticipantSets(player).then(data =>

@@ -26,7 +26,7 @@ class SmashGGGetter {
 
     }
 
-    init()
+    init_participants()
     {
         var self = this;
         var variables = {"eventSlug": this.slug};
