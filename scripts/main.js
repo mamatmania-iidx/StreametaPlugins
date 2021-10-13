@@ -30,27 +30,18 @@ function checkMessage(data)
                 player = data["teams"][1]["players"][0]["person"]["name"]
             };
         },"teams-0-players-0-person-name").then(function(){
-            getter.getParticipantSets(player);
             $('body').html("Fetching..")
-            waitForCompareAndExecute();
+            getter.getParticipantSets(player).then(data =>
+                {
+                    var newHTML = "";
+                    var max = Math.min(data.length, 6)
+                    for (let i = 0; i < max; i++) {
+                        newHTML = newHTML + formatSetData(data[i]['displayScore'], player) + "<br>"
+                        
+                    }
+                    $('body').html(newHTML);
+                });
         })
-    }
-}
-
-function waitForCompareAndExecute(){
-    // Have to wait for Compare object to finish.
-    if (!getter.done)
-    {
-      setTimeout(waitForCompareAndExecute, 400);
-    } else {
-        //change here
-        var newHTML = "";
-        var max = Math.min(getter.recentData.length, 6)
-        for (let i = 0; i < max; i++) {
-            newHTML = newHTML + formatSetData(getter.recentData[i]['displayScore'], player) + "<br>"
-            
-        }
-        $('body').html(newHTML);
     }
 }
 
@@ -69,8 +60,22 @@ $('document').ready(function(){
             }
             var bracketLink = data["tournament"]["brackets"];
             getter = new SmashGGGetter(bracketLink);
-            getter.getParticipantSets(player);
-            waitForCompareAndExecute();
+            getter.init().then(() => 
+            {
+                console.log(player);
+                getter.getParticipantSets(player).then(data =>
+                    {
+                        console.log(data)
+                        var newHTML = "";
+                        var max = Math.min(data.length, 6)
+                        for (let i = 0; i < max; i++) {
+                            newHTML = newHTML + formatSetData(data[i]['displayScore'], player) + "<br>"
+                            
+                        }
+                        $('body').html(newHTML);
+                    });
+            })
+            
         });
     } catch (error) {
         console.log(error);
