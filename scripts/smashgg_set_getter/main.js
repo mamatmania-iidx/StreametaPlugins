@@ -67,6 +67,7 @@ $('document').ready(function(){
                         console.log(data)
                         var newHTML = "";
                         var max = Math.min(data.length, 6)
+                        data = data.slice(-max)
                         for (let i = 0; i < max; i++) {
                             newHTML = newHTML + formatSetData(data[i]['displayScore'], player) + "<br>"
                             
