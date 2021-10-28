@@ -37,40 +37,35 @@ $('document').ready(function(){
         console.log(smashGGKey);
         console.log(streametaToken);
         getStreametaApi(function(data){
-            
-            
-            
-            
             var data = JSON.parse(data);
             var bracketLink = data["tournament"]["brackets"];
             getter = new SmashGGGetter(bracketLink);
             getter.getEventSets(bracketNames).then(sets =>
             {
                 sets = sets.filter(set => set.displayScore != "DQ" && set.displayScore != null)
-                if (sets.length > 0){
+                if (sets.length > 0)
+                {
                     var newHTML = "Latest results&nbsp;&nbsp;"
                     sets = sets.slice(0,20)
                     sets.forEach(set => {
-                        newHTML += `<span style="color:#00a2ff">|</span>&nbsp;&nbsp;<span style="color:#ff5e00">${set.fullRoundText}</span>&nbsp&nbsp;${formatSetData(set.displayScore)}&nbsp;&nbsp;`
-                    });}
-                else {
-                    newHTML = "Latest results will be shown here as the tournament progresses."
+                        newHTML += `<span class="fnsorange">|</span>&nbsp;&nbsp;<span class="fnsblue">${set.fullRoundText}</span>&nbsp&nbsp;${formatSetData(set.displayScore)}&nbsp;&nbsp;`
+                    });
+                    $('.marquee').html(newHTML);
+                    var mq = $('.marquee')
+                    mq.removeClass('hidden')
+                    setTimeout(function(){mq.removeClass('visuallyhidden'); mq.marquee({
+                        //duration in milliseconds of the marquee
+                        speed: 120,
+                        //gap in pixels between the tickers
+                        gap: 50,
+                        //time in milliseconds before the marquee will start animating
+                        delayBeforeStart: 500,
+                        //'left' or 'right'
+                        direction: 'left',
+                        //true or false - should the marquee be duplicated to show an effect of continues flow
+                        duplicated: false
+                    })},50)
                 }
-                $('.marquee').html(newHTML);
-                var mq = $('.marquee')
-                mq.removeClass('hidden')
-                setTimeout(function(){mq.removeClass('visuallyhidden'); mq.marquee({
-                    //duration in milliseconds of the marquee
-                    speed: 120,
-                    //gap in pixels between the tickers
-                    gap: 50,
-                    //time in milliseconds before the marquee will start animating
-                    delayBeforeStart: 0,
-                    //'left' or 'right'
-                    direction: 'left',
-                    //true or false - should the marquee be duplicated to show an effect of continues flow
-                    duplicated: false
-                })},50)
             });
         })
     } catch (error) {
