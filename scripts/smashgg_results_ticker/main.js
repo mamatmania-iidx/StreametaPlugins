@@ -47,8 +47,14 @@ $('document').ready(function(){
                 {
                     var newHTML = "Latest results&nbsp;&nbsp;"
                     sets = sets.slice(0,20)
+                    
+                    
                     sets.forEach(set => {
-                        newHTML += `<span class="fnsorange">|</span>&nbsp;&nbsp;<span class="fnsblue">${set.fullRoundText}</span>&nbsp&nbsp;${formatSetData(set.displayScore)}&nbsp;&nbsp;`
+                        addition = ""
+                        if (set["phaseGroup.phase.name"] == "Top 16 (Bo5)"){
+                            addition = "Top 16 "
+                        }
+                        newHTML += `<span class="fnsorange">|</span>&nbsp;&nbsp;<span class="fnsblue">${addition}${set.fullRoundText}</span>&nbsp&nbsp;${formatSetData(set.displayScore)}&nbsp;&nbsp;`
                     });
                     $('.marquee').html(newHTML);
                     var mq = $('.marquee')
