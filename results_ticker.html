@@ -5,18 +5,20 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery.marquee@1.6.0/jquery.marquee.min.js"></script>
         <script src="config.js"></script>
-        <script src="scripts/smashgg_set_getter/helper.js"></script>
-        <script src="scripts/smashgg_set_getter/difflib.js"></script>
+        <link rel="stylesheet" href="results_ticker.css">
+        
+        <script src="scripts/smashgg_results_ticker/helper.js"></script>
         <script src="scripts/smashgg_queries.js"></script>
         <script src="scripts/smashgg_getter.js"></script>
         <script src="scripts/network.js"></script>
-        <script src="scripts/smashgg_set_getter/main.js"></script>
+        <script src="scripts/smashgg_results_ticker/main.js"></script>
     </head>
 
     <body>
-        Welcome! <br> Don't forget to set side ("?side=p1" or p2), Streameta and SmashGG tokens @ config.js.
-        <br> If you did, then reload this page and everything should be good.
+        <div class='marquee hidden visuallyhidden' data-gap='15' data-duplicated='false' >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit END.
+</div>
     </body>
 </html>

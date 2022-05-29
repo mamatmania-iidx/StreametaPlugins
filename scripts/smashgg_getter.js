@@ -60,12 +60,10 @@ class SmashGGGetter {
         })
     }
     
-
-    
     getParticipantSets(participant)
     {
         if (!this.init_done){
-            throw "Object not initialized"
+            throw "Participants not initialized"
         }
         var self = this;
         var keys = $.map(this.participants, function(v, i){
@@ -80,6 +78,7 @@ class SmashGGGetter {
             variables={"eventSlug": this.slug, "playerId": this.participants[target]}).then(data =>
             {if (data["error"]){
                 console.log(data["error"])
+                throw Error(data["error"])
             }
             else
             {
@@ -94,7 +93,6 @@ class SmashGGGetter {
           });
         
     }
-
 
     runQuery(query, callback, variables= new Object(), page=false, async=true)
     {
@@ -119,5 +117,41 @@ class SmashGGGetter {
             participants[i] = flattenJSON(participants[i])
             this.participants[participants[i]["participants.0.gamerTag"].toLowerCase()] = participants[i]["id"]
         }
+    }
+
+    async runPagedQuery(query, page_func, callback, variables= new Object())
+    {
+        var first_result = await this.runQuery(query, callback, variables, 1);
+        var totalPages = page_func(first_result)["totalPages"];
+        
+        var promises = [first_result]
+        if (totalPages > 1){
+            for (var i = 2; i <= totalPages; i++)
+            {
+                promises.push(this.runQuery(query, function(){}, variables, i))
+            };
+        }
+        var results = await Promise.all(promises);
+        return results
+    }
+
+    async getEventSets(bracket_name_filter=[])
+    {
+        var data = await this.runPagedQuery(GET_EVENT_SETS,
+            getEventSetsPageInfo, function(){},{'eventSlug':getter.slug});
+        console.log(data)
+        for (var i = 0; i < data.length; i++){
+            console.log(i, data[i])
+            data[i] = data[i]["data"]["event"]["sets"]["nodes"]
+        }
+        data = [].concat.apply([], data);
+        data.sort(function compareFn(a, b) { return b["completedAt"]-a["completedAt"] });
+        for (let i = 0; i < data.length; i++) {
+            data[i] = flattenJSON(data[i]);
+        }
+        if (bracket_name_filter.length > 0){
+            data = data.filter(set => bracket_name_filter.includes(set["phaseGroup.phase.name"]));
+        }
+        return data
     }
 }
