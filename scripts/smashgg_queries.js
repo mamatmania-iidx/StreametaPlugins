@@ -42,6 +42,35 @@ event(slug: $eventSlug){
     }
 }`
 
+var GET_STREAM_QUEUE_SETS = `query StreamQueueOnTournament($tourneySlug: String!) {
+tournament(slug: $tourneySlug) {
+    id
+    streamQueue {
+    stream {
+        streamName
+    }
+    sets {
+        phaseGroup{
+          phase{
+            name
+          }
+        }
+        fullRoundText
+        id
+        event{
+          id
+        }
+        slots{
+          entrant{
+            name
+          }
+          prereqType
+          prereqId
+        }
+      }
+    }
+}}`
+
 var GET_EVENT_SETS = `query EventSets($eventSlug: String, $page: Int){
     event(slug: $eventSlug){
         sets(filters:

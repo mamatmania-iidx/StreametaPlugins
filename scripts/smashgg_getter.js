@@ -19,11 +19,10 @@ class SmashGGGetter {
         this.headers = {"Authorization": `Bearer ${smashggKey}`};
         this.api_url = "https://api.smash.gg/gql/alpha";
         this.participants = {};
-        this.event = "";
+        this.event = temp[3];
         this.init_done = false;
-        this.tournament = "";
+        this.tournament = temp[1];
         this.recentData = false;
-
     }
 
     init_participants()
@@ -70,7 +69,7 @@ class SmashGGGetter {
             return i;
           });
         
-        var target = difflib.getCloseMatches(participant,keys)[0]
+        var target = difflib.getCloseMatches(participant,keys, cutoff=0.8)[0]
         var variables = {"eventSlug": this.slug, "playerId": this.participants[target]}
         this.done = false;
         return new Promise((resolve, reject) => {
@@ -91,7 +90,6 @@ class SmashGGGetter {
             resolve(data)}
             )
           });
-        
     }
 
     runQuery(query, callback, variables= new Object(), page=false, async=true)
@@ -154,4 +152,32 @@ class SmashGGGetter {
         }
         return data
     }
+
+    async getStreamQueueSets(stream_name)
+    {
+        var self = this;
+        var variables;
+        var data;
+        data = await this.runQuery(GET_STREAM_QUEUE_SETS,function(data){console.log("done")},
+        variables={"tourneySlug": `tournament/${this.tournament}`})
+        if (data["error"]){
+            console.log(data["error"])
+            throw Error(data["error"])
+        }
+        else
+        {
+            data = data["data"]["tournament"]["streamQueue"];
+            var temp;
+            for (let i = 0; i < data.length; i++) {
+                if (data[i]['stream']['streamName'].toLowerCase()==stream_name.toLowerCase()){
+                    temp = data[i]['sets']
+                }
+            }
+            data = temp
+            console.log(data)
+        }
+        return data
+    }
+
+
 }
