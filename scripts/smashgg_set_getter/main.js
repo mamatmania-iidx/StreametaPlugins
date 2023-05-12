@@ -30,7 +30,7 @@ function checkMessage(data)
                 player = data["teams"][1]["players"][0]["person"]["name"]
             };
         },"teams-0-players-0-person-name").then(function(){
-            $('body').html("Fetching..")
+            $('body').html("")
             getter.getParticipantSets(player).then(data =>
                 {
                     var newHTML = "";
@@ -48,7 +48,7 @@ $('document').ready(function(){
     try {
         console.log(smashGGKey);
         console.log(streametaToken);
-        $('body').html("Fetching..");
+        $('body').html("");
         initWebsocket();
         getStreametaApi(function(data){
             var data = JSON.parse(data);
@@ -67,6 +67,7 @@ $('document').ready(function(){
                         console.log(data)
                         var newHTML = "";
                         var max = Math.min(data.length, 6)
+                        data = data.slice(-max)
                         for (let i = 0; i < max; i++) {
                             newHTML = newHTML + formatSetData(data[i]['displayScore'], player) + "<br>"
                             
